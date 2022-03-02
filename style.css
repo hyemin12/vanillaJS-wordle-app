@@ -1,0 +1,247 @@
+/* COMMON */
+@font-face {
+  font-family: "MaplestoryOTFBold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  box-sizing: border-box;
+}
+input {
+  box-sizing: border-box;
+}
+li {
+  list-style: none;
+}
+.inner {
+  width: 500px;
+  margin: 0 auto;
+}
+
+/* THEMA */
+.dark-mode {
+  width: 100vw;
+  height: 100vh;
+  background: #2d2424;
+}
+.dark-mode .header {
+  color: #fff;
+}
+.dark-mode input {
+  background-color: #b4a5a5;
+  border: none;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0;
+}
+.header .info {
+  display: block;
+  width: 55px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.header h1 {
+  font-size: 3em;
+  font-family: "MaplestoryOTFBold", sans-serif;
+}
+
+/* THEMA SWITCH BTN */
+.setting {
+  display: inline-block;
+  width: 55px;
+  height: 20px;
+  position: relative;
+  top: 4px;
+}
+.setting input[type="checkbox"] {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+.setting .switch-mode {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px #eee, -1px -1px 3px #eee;
+  border: none;
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.4s;
+}
+.setting .switch-mode::before {
+  content: "";
+  width: 28px;
+  height: 28px;
+  background: url("./img/sunny2.png") no-repeat center;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px #ccc;
+  border-radius: 50%;
+  position: absolute;
+  top: -4px;
+  left: 5px;
+  transition: 0.4s;
+}
+.setting input:checked + .switch-mode {
+  background-color: #444;
+  box-shadow: inset 1px 1px 2px #222;
+}
+.setting input:checked + .switch-mode::before {
+  background: url("./img/moon.png") no-repeat center;
+  background-color: #222;
+  box-shadow: none;
+  transform: translateX(18px);
+}
+.setting .mode-name {
+  font-size: 10px;
+  position: absolute;
+  left: 4px;
+  bottom: -15px;
+}
+
+/* INPUT */
+.input-list {
+  width: 400px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+.input-row {
+  display: flex;
+  justify-content: center;
+}
+input {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #dbd0c0;
+  border-radius: 5px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  font-size: 40px;
+  text-align: center;
+}
+input:focus {
+  outline: none;
+}
+
+.correct {
+  background-color: #24a19c;
+  color: #fff;
+  border: none !important;
+}
+.present {
+  background-color: #ffe162;
+  color: #fff;
+  border: none !important;
+}
+.absent {
+  background-color: #bbad9a;
+  color: #fff;
+  border: none !important;
+}
+
+/* KETBOARD */
+.keyboard {
+  display: flex;
+  width: 100%;
+  padding-top: 30px;
+}
+.key-row {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 5px;
+}
+.key-row button {
+  width: 45px;
+  height: 55px;
+  background-color: #dbd0c0;
+  border: none;
+  border-radius: 5px;
+  font-family: "Noto Sans KR", sans-serif;
+  transition: 0.4s;
+  cursor: pointer;
+}
+.key-row button:hover {
+  background-color: #bbad9a;
+}
+.key-row button.enter {
+  flex-grow: 1;
+}
+
+/* HOW TO */
+.how-to {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: visible;
+  transition: 0.4s;
+}
+.how-to .wrapper {
+  width: 400px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 25px 20px;
+  text-align: center;
+  position: relative;
+}
+.how-to .wrapper h1 {
+  margin-bottom: 10px;
+}
+.how-to .wrapper > p {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  font-size: 14px;
+}
+.how-to .wrapper .row ul {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  padding-top: 20px;
+}
+.how-to .wrapper .row ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #2d2424;
+  border-radius: 5px;
+}
+.how-to .wrapper .row p {
+  padding: 5px 0;
+  font-size: 14px;
+}
+.btn-close {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+.how-to.hidden {
+  bottom: -150px;
+  visibility: hidden;
+  transition: 0.4s;
+}
