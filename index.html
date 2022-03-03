@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wordle</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
@@ -76,6 +78,20 @@
             </li>
           </ul>
         </section>
+        <section class="game-wrapper">
+          <div class="row">
+            <ul class="game-tiles">
+              <li class="game-tile"></li>
+              <li class="game-tile"></li>
+              <li class="game-tile"></li>
+              <li class="game-tile"></li>
+              <li class="game-tile"></li>
+            </ul>
+          </div>
+        </section>
+        <p class="hint">
+          상단의 네모안에 정답을 입력하고 하단의 ENTER 버튼을 눌러주세요.
+        </p>
         <section class="keyboard">
           <ul class="key-wrapper">
             <li class="key-row">
@@ -154,7 +170,13 @@
                 어떤 위치에도 있지 않습니다.
               </p>
             </div>
-            <button class="btn-close">X</button>
+            <button class="btn-close btn-howto">X</button>
+          </div>
+        </section>
+        <section class="correct-answer">
+          <div class="wrapper">
+            <h1>축하합니다! 정답 입니다.</h1>
+            <button class="btn-close btn-correct">X</button>
           </div>
         </section>
       </div>

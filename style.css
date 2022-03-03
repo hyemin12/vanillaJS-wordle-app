@@ -38,6 +38,9 @@ li {
   background-color: #b4a5a5;
   border: none;
 }
+.dark-mode .hint {
+  color: #fff;
+}
 
 /* HEADER */
 .header {
@@ -45,7 +48,7 @@ li {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 20px 0;
+  padding: 40px 0;
 }
 .header .info {
   display: block;
@@ -138,26 +141,32 @@ input:focus {
 }
 
 .correct {
-  background-color: #24a19c;
+  background-color: #24a19c !important;
   color: #fff;
   border: none !important;
 }
 .present {
-  background-color: #ffe162;
+  background-color: #ff965b !important;
   color: #fff;
   border: none !important;
 }
 .absent {
-  background-color: #bbad9a;
+  background-color: #8c8781 !important;
   color: #fff;
   border: none !important;
+}
+
+.hint {
+  padding-top: 5px;
+  font-size: 14px;
+  text-align: center;
 }
 
 /* KETBOARD */
 .keyboard {
   display: flex;
   width: 100%;
-  padding-top: 30px;
+  padding-top: 40px;
 }
 .key-row {
   display: flex;
@@ -171,15 +180,16 @@ input:focus {
   background-color: #dbd0c0;
   border: none;
   border-radius: 5px;
+  font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
   transition: 0.4s;
-  cursor: pointer;
 }
-.key-row button:hover {
+/* .key-row button:hover {
   background-color: #bbad9a;
-}
+} */
 .key-row button.enter {
   flex-grow: 1;
+  cursor: pointer;
 }
 
 /* HOW TO */
@@ -240,8 +250,44 @@ input:focus {
   right: 20px;
   cursor: pointer;
 }
-.how-to.hidden {
-  bottom: -150px;
+
+/* CORRECT ANSWER */
+.correct-answer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: visible;
+  transition: 0.4s;
+}
+.correct-answer .wrapper {
+  width: 400px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 25px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.hidden {
   visibility: hidden;
   transition: 0.4s;
+}
+
+.game-wrapper {
+}
+.game-tiles {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.game-tile {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #222;
 }
