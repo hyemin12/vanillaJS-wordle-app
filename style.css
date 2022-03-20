@@ -34,11 +34,9 @@ li {
 .dark-mode .header {
   color: #fff;
 }
-.dark-mode input {
+.dark-mode .game .tile {
   background-color: #b4a5a5;
   border: none;
-}
-.dark-mode .hint {
   color: #fff;
 }
 
@@ -116,30 +114,31 @@ li {
   bottom: -15px;
 }
 
-/* INPUT */
-.input-list {
-  width: 400px;
-  margin: 0 auto;
-  padding-top: 20px;
-}
-.input-row {
+/* GAME TILE */
+.game {
   display: flex;
   justify-content: center;
 }
-input {
+.game #board {
+  width: calc(20px + (64px * 5));
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.game .tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 60px;
   height: 60px;
   border: 2px solid #dbd0c0;
   border-radius: 5px;
-  margin-right: 7px;
-  margin-bottom: 7px;
-  font-size: 40px;
-  text-align: center;
-}
-input:focus {
-  outline: none;
+  box-sizing: border-box;
+  font-size: 20px;
 }
 
+/* 정답확인 */
 .correct {
   background-color: #24a19c !important;
   color: #fff;
@@ -183,13 +182,15 @@ input:focus {
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
   transition: 0.4s;
-}
-/* .key-row button:hover {
-  background-color: #bbad9a;
-} */
-.key-row button.enter {
-  flex-grow: 1;
   cursor: pointer;
+}
+.key-row button:hover {
+  background-color: #b8a384;
+}
+.key-row button.enter,
+.key-row button.delete {
+  font-size: 14px;
+  flex-grow: 1;
 }
 
 /* HOW TO */
@@ -277,17 +278,4 @@ input:focus {
 .hidden {
   visibility: hidden;
   transition: 0.4s;
-}
-
-.game-wrapper {
-}
-.game-tiles {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-.game-tile {
-  width: 50px;
-  height: 50px;
-  border: 1px solid #222;
 }

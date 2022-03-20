@@ -1,83 +1,127 @@
-const btnSubmit = document.querySelector(".enter");
-const btnMode = document.querySelector(".setting input");
-const keyBoard = document.querySelector(".keyboard");
-const btnKeyboard = document.querySelectorAll(".keyboard button");
-
-const keyUpInput = document.querySelectorAll(".input");
+const board = document.getElementById("board");
+const keyboard = document.querySelectorAll(".keyboard button");
 
 const modalHowto = document.querySelector(".how-to");
 const modalCorrect = document.querySelector(".correct-answer");
+const gameResult = document.querySelector(".correct-answer h1");
 const btnClose = document.querySelectorAll(".btn-close");
 const btnHowTo = document.querySelector("i.info");
-const game = document.querySelector(".game");
+const btnMode = document.querySelector(".setting input");
 
-let answer = "ㅅㅏㅌㅏㅇ";
+let height = 6;
+let width = 5;
+let row = 0;
+let col = 0;
+const answerList = [
+  { answer: ["ㅅ", "ㅏ", "ㅌ", "ㅏ", "ㅇ"], word: "사탕" },
+  { answer: ["ㄹ", "ㅏ", "ㅁ", "ㅕ", "ㄴ"], word: "라면" },
+  { answer: ["ㄴ", "ㅗ", "ㄹ", "ㅕ", "ㄱ"], word: "노력" },
+  { answer: ["ㅁ", "ㅏ", "ㄴ", "ㅅ", "ㅔ"], word: "만세" },
+  { answer: ["ㄱ", "ㅜ", "ㄱ", "ㅡ", "ㅂ"], word: "구급" },
+  { answer: ["ㅅ", "ㅗ", "ㅁ", "ㅏ", "ㅇ"], word: "소망" },
+  { answer: ["ㄱ", "ㅏ", "ㅁ", "ㅅ", "ㅏ"], word: "감사" },
+  { answer: ["ㅅ", "ㅏ", "ㄹ", "ㅏ", "ㅇ"], word: "사랑" },
+  { answer: ["ㅅ", "ㅑ", "ㅁ", "ㅍ", "ㅜ"], word: "샴푸" },
+];
+const index = Math.floor(Math.random() * answerList.length);
+let answer = answerList[index].answer;
+let word = answerList[index].word;
 
-// 탭 넘어가기
-for (let a = 0; a < keyUpInput.length - 1; a++) {
-  keyUpInput[0].readOnly = false;
-  keyUpInput[a].readOnly = true;
-  keyUpInput[a].addEventListener("keyup", function () {
-    if (keyUpInput[a].value.length == 1) {
-      keyUpInput[a + 1].readOnly = false;
-      keyUpInput[a + 1].focus();
+// 페이지가 로드되면 init 함수 불러오기
+window.onload = function () {
+  init();
+};
+
+// init 함수 = 보드판
+// 6 x 5 타일을 만들고, board에 append
+// 각각 타일을 구분할 수 있는 index를 고유한 아이디로 부여
+function init() {
+  for (let r = 0; r < height; r++) {
+    for (let c = 0; c < width; c++) {
+      let tile = document.createElement("span");
+      tile.id = r.toString() + "-" + c.toString();
+      tile.classList.add("tile");
+      tile.innerText = "";
+      board.appendChild(tile);
     }
-  });
+  }
 }
-console.log(keyUpInput[0].value);
 
-// 입력된 값과 keyboard 키 비교
-const arrKey = [...btnKeyboard];
-const keyCopy = [];
-for (let p = 0; p < arrKey.length - 1; p++) {
-  // console.log(btnKeyboard[p].dataset.key);
-  let array = btnKeyboard[p].dataset.key;
-  keyCopy.push(array);
+// 키보드 array
+const keyboardArr = [];
+for (let k = 0; k < keyboard.length; k++) {
+  keyboardArr.push(keyboard[k].dataset.key);
 }
 
 // 정답확인
-function handleBtn() {
-  const input = document.querySelectorAll(".input");
-  let arrInputValue = [];
+function handleMark() {
+  let correctTile = 0;
   for (let i = 0; i < 5; i++) {
-    const picked2 = keyCopy.indexOf(input[i].value, 0);
-    if (input[i].value === "") {
-      alert("값을입력하세요");
-      return null;
-    }
-    if (input[i].value === answer[i]) {
-      input[i].classList.add("correct");
-      btnKeyboard[picked2].classList.add("correct");
-    } else if (answer.includes(input[i].value)) {
-      input[i].classList.add("present");
-      btnKeyboard[picked2].classList.add("present");
+    let currentTile = document.getElementById(
+      row.toString() + "-" + i.toString()
+    );
+    let userAnswer = currentTile.innerText;
+    let userPick = keyboardArr.indexOf(userAnswer, 0);
+    if (userAnswer === answer[i]) {
+      currentTile.classList.add("correct");
+      keyboard[userPick].classList.add("correct");
+      correctTile += 1;
+    } else if (answer.join("").includes(userAnswer)) {
+      currentTile.classList.add("present");
+      keyboard[userPick].classList.add("present");
     } else {
-      input[i].classList.add("absent");
-      btnKeyboard[picked2].classList.add("absent");
+      currentTile.classList.add("absent");
+      keyboard[userPick].classList.add("absent");
     }
-    input[i].classList.remove("input");
-    input[i].readOnly = true;
-    arrInputValue.push(input[i].value);
-    let inputValue = arrInputValue.join("");
-    console.log(arrInputValue);
-    console.log(inputValue);
-    if (inputValue == answer) {
-      modalCorrect.classList.remove("hidden");
-    }
+  }
+  if (correctTile === width) {
+    keyboard.forEach((button) => {
+      button.removeEventListener("click", insertKey);
+    });
+    modalCorrect.classList.remove("hidden");
+    gameResult.innerText = "정답입니다!";
+  } else if (correctTile !== width && row === 5) {
+    keyboard.forEach((button) => {
+      button.removeEventListener("click", insertKey);
+    });
+    modalCorrect.classList.remove("hidden");
+    gameResult.innerText = `실패! 정답은 ${word}입니다.`;
   }
 }
 
-// dark mode
-function handleMode() {
-  const container = document.querySelector(".container");
-  if (btnMode.checked) {
-    container.classList.add("dark-mode");
-  } else {
-    container.classList.remove("dark-mode");
+// 입력하기 (keyboard 클릭)
+
+function insertKey(event) {
+  let keyvalue = event.target.innerText;
+  let currentTile = document.getElementById(
+    row.toString() + "-" + col.toString()
+  );
+  if (col < width) {
+    if (keyvalue != null && keyvalue !== "DELETE" && keyvalue !== "ENTER") {
+      currentTile.innerText = keyvalue;
+      col += 1;
+    } else if (keyvalue === "DELETE" && col >= 0) {
+      currentTile.innerText = "";
+      if (col > 0) {
+        col -= 1;
+      } else if (col === 0) {
+        col = 0;
+      }
+    } else if (keyvalue === "ENTER") {
+      alert("5글자를 입력해주세요");
+    }
+  } else if (keyvalue === "ENTER" && col === width) {
+    handleMark();
+    row += 1;
+    col = 0;
   }
 }
+keyboard.forEach((button) => {
+  button.addEventListener("click", insertKey);
+});
 
-// console.log(btnClose.parentNode.offsetParent);
+// 모달창
+
 function modalOpen() {
   modalHowto.classList.remove("hidden");
 }
@@ -91,32 +135,19 @@ function modalClose() {
   }
 }
 
-btnSubmit.addEventListener("click", handleBtn);
-btnMode.addEventListener("click", handleMode);
 btnHowTo.addEventListener("click", modalOpen);
 btnClose.forEach((button) => {
   button.addEventListener("click", modalClose);
 });
 
-// 키보드 버튼 누르면 값 입력하기...
-const 키보드캡 = document.querySelectorAll(".keyboard button");
-const 전체타일 = document.querySelector(".game-tiles");
-const 게임타일 = document.querySelectorAll(".game-tile");
-
-function insertKey(event) {
-  let keyvalue = event.target.textContent;
-
-  for (let i = 0; i < 5; i++) {
-    게임타일[i].innerText = keyvalue;
+// 모드변경
+function handleMode() {
+  const container = document.querySelector(".container");
+  if (btnMode.checked) {
+    container.classList.add("dark-mode");
+  } else {
+    container.classList.remove("dark-mode");
   }
 }
-키보드캡.forEach((button) => {
-  button.addEventListener("click", insertKey);
-});
 
-// 키보드 이벤트 확인방법
-// KeyboardEvent {isTrusted: true, key: 'w', code: 'KeyW', location: 0,등등}
-// window.onkeydown = (e) => console.log(e);
-// window.addEventListener("keydown", (e) => console.log(e));
-
-// 키보드 입력값을 input value로 저장하고 출력...?
+btnMode.addEventListener("click", handleMode);
